@@ -23,6 +23,7 @@ region="${INPUT_REGION:-${FLY_REGION:-iad}}"
 org="${INPUT_ORG:-${FLY_ORG:-personal}}"
 image="$INPUT_IMAGE"
 config="$INPUT_CONFIG"
+secrets="$INPUT_SECRETS"
 
 if ! echo "$app" | grep "$PR_NUMBER"; then
   echo "For safety, this action requires the app's name to contain the PR number."
@@ -46,8 +47,8 @@ if [ -n "$INPUT_POSTGRES" ]; then
 fi
 
 # Add additional secrets if specified
-if [ -n "$INPUT_SECRETS" ]; then
-  echo $INPUT_SECRETS | tr " " "\n" | flyctl secrets import --app "$app"
+if [ -n "$secrets" ]; then
+  echo $secrets | tr " " "\n" | flyctl secrets import --app "$app"
 fi
 
 # Deploy the Fly app
