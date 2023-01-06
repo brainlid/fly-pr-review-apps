@@ -38,7 +38,7 @@ fi
 
 # Create the app if it doesn't exist yet
 if ! flyctl status --app "$app" || false; then
-  flyctl create --name "$app" --org "$org"
+  flyctl apps create --name "$app" --org "$org"
 fi
 
 # Attach postgres cluster to the app if specified. Where --app is the postgres app name.
