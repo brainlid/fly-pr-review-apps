@@ -41,9 +41,9 @@ if ! flyctl status --app "$app" || false; then
   flyctl apps create --name "$app" --org "$org"
 fi
 
-# Attach postgres cluster to the app if specified. Where --app is the postgres app name.
+# Attach postgres cluster to the app if specified.
 if [ -n "$INPUT_POSTGRES" ]; then
-  flyctl postgres attach --app "$INPUT_POSTGRES" || true
+  flyctl postgres attach "$INPUT_POSTGRES" || true
 fi
 
 # Add additional secrets if specified
