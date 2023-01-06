@@ -37,7 +37,7 @@ if [ "$EVENT_TYPE" = "closed" ]; then
 fi
 
 # Create the app if it doesn't exist yet
-if ! flyctl status --app "$app"; then
+if ! flyctl status --app "$app" || false; then
   flyctl create --name "$app" --org "$org"
 fi
 
