@@ -39,21 +39,26 @@ fi
 # Create the app if it doesn't exist yet
 if ! flyctl status --app "$app" || false; then
   flyctl apps create --name "$app" --org "$org"
+  echo "Created app $app in org $org"
 fi
 
 # Attach postgres cluster to the app if specified.
 if [ -n "$INPUT_POSTGRES" ]; then
   flyctl postgres attach "$INPUT_POSTGRES" || true
+  echo "Attached to database $INPUT_POSTGRES"
 fi
 
 # Add additional secrets if specified
 if [ -n "$secrets" ]; then
   echo $secrets | tr " " "\n" | flyctl secrets import --app "$app"
+  echo "Imported secreats"
 fi
 
 # Deploy the Fly app
 if [ "$INPUT_UPDATE" != "false" ]; then
+  echo "Deploying app..."
   flyctl deploy --config "$config" --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate
+  echo "App deployed."
 fi
 
 # Make some info available to the GitHub workflow.
